@@ -3,8 +3,8 @@ from nonebot.adapters.onebot.v11 import MessageEvent, MessageSegment
 from nonebot.plugin import PluginMetadata
 from nonebot.typing import T_State
 
-from .bf2042 import bf_2042_gen_pic
-from .data import query_data
+from .picture_builder import builder
+from .data import query_data, get_img
 from ..core.message_handle import MessageState
 
 __plugin_meta__ = PluginMetadata(
@@ -24,24 +24,20 @@ async def handle_status(event: MessageEvent, state: T_State):
     m_state = MessageState(state)
     cmd = m_state.get_command()
     msg = m_state.get_command_arg()
-    a = {".盒": 0,
-         ".武器": 1,
-         ".配备": 3,
-         ".专家": 4,
-         ".载具": 5
-         }
-    if msg is None:
-        await status.send("消息是空的喵")
-    else:
-        msg_info = (MessageSegment.text(f"消息是{msg.text}"))
-        await status.send(msg_info)
-    print(state)
-    print(m_state)
+    cmd = cmd[0]
+    property = {".盒": "0",
+                ".武器": "weapons",
+                ".配备": "gadgets",
+                ".专家": "classes",
+                ".载具": "vehicles"
+                }
+    msg_info = (MessageSegment.text(f"正在查询 {msg.text} 的 {cmd.replace('.', '')} 数据，请耐心等待"))
+    await status.send(msg_info)
+    img_mes = await get_img(property[cmd])
     message_id = event.message_id
-
-    # img_mes = await query_data(player, "pc", query_type)
-    # if img_mes[0]:
-    #     res = MessageSegment.image(img_mes[1])
-    # else:
-    #     res = MessageSegment.text(img_mes[1])
-    # msg_gen = (MessageSegment.reply(message_id), res)
+    if img_mes[0]:
+        res = MessageSegment.image(img_mes[1])
+    else:
+        res = MessageSegment.text(img_mes[1])
+    msg_gen = (MessageSegment.reply(message_id), res)
+    await status.finish(msg_gen)
