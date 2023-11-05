@@ -124,7 +124,7 @@ data = {
             "weaponName": "NTW-50",
             "image": "https://cdn.gametools.network/weapons/bf2042/weapon_default_NTW-20-76c5dc49.png",
             "id": "pri_ba_ntw50",
-            "kills": 131,
+            "kills": 114514,
             "damage": 14956,
             "bodyKills": 113,
             "headshotKills": 18,
@@ -2016,7 +2016,7 @@ data = {
             "vehicleName": "F-35E Panther",
             "image": "https://cdn.gametools.network/vehicles/bf2042/F35-6e81cc1d.png",
             "id": "air_plane_f35e",
-            "kills": 38,
+            "kills": 114514,
             "killsPerMinute": 0.24,
             "damage": 9625,
             "spawns": 73,
@@ -2646,7 +2646,7 @@ data = {
             "vehicleName": "SU-57 FELON",
             "image": "https://cdn.gametools.network/vehicles/bf2042/SU57-8c465ace.png",
             "id": "air_plane_su57",
-            "kills": 22,
+            "kills": 1919,
             "killsPerMinute": 0.25,
             "damage": 5173,
             "spawns": 51,
@@ -2660,7 +2660,7 @@ data = {
             "callIns": 30,
             "damageTo": 4569,
             "destroyed": 24,
-            "timeIn": 5300
+            "timeIn": 3600000
         },
         {
             "type": "Helicopter",
@@ -5955,7 +5955,7 @@ async def query_data(player, platform, query_type):
                 rest = str_filter(rest)
                 if response.status == 200:
                     result = json.loads(rest)
-                    img = await builder(data, platform, query_type)
+                    img = await builder(result, platform, query_type)
                     mes = (True, img)
                 else:
                     mes = (False, "请求错误")
