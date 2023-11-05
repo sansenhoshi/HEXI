@@ -51,3 +51,4 @@ class PlayerStats:
         self.gamemodes = sorted(data["gamemodes"], key=lambda k: k['secondsPlayed'], reverse=True)  # 游戏模式列表 按时长倒序排列
         self.maps = sorted(data["maps"], key=lambda k: k['secondsPlayed'], reverse=True)    # 地图列表 按时长倒序排列
         self.gadgets = sorted(data["gadgets"], key=lambda k: k['secondsPlayed'], reverse=True)  # 小工具/配备 列表
+        self.dividedKills = data['dividedKills']
