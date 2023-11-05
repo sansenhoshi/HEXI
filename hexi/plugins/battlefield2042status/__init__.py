@@ -14,7 +14,7 @@ __plugin_meta__ = PluginMetadata(
     type="application",
 )
 
-status_aliases = {".盒", ".数据", ".武器", ".配备", ".专家", ".载具"}
+status_aliases = {"/数据", "/武器", "/配备", "/专家", "/载具"}
 
 status = on_command("2042战绩", aliases=status_aliases)
 
@@ -25,15 +25,15 @@ async def handle_status(event: MessageEvent, state: T_State):
     cmd = m_state.get_command()
     msg = m_state.get_command_arg()
     cmd = cmd[0]
-    property = {".盒": "0",
-                ".武器": "weapons",
-                ".配备": "gadgets",
-                ".专家": "classes",
-                ".载具": "vehicles"
+    property = {"/数据": "0",
+                "/武器": "weapons",
+                "/配备": "gadgets",
+                "/专家": "classes",
+                "/载具": "vehicles"
                 }
-    msg_info = (MessageSegment.text(f"正在查询 {msg.text} 的 {cmd.replace('.', '')} 数据，请耐心等待"))
+    msg_info = (MessageSegment.text(f"正在查询 {msg.text} 的 {cmd.replace('/', '')} 数据，请耐心等待"))
     await status.send(msg_info)
-    img_mes = await get_img(property[cmd])
+    img_mes = await query_data(msg.text, 'pc', cmd)
     message_id = event.message_id
     if img_mes[0]:
         res = MessageSegment.image(img_mes[1])
