@@ -150,7 +150,6 @@ win32-setctime==1.1.0 ; python_version >= "3.10" and python_version < "4.0" and 
 wordcloud==1.9.2 ; python_version >= "3.10" and python_version < "4.0"
 wsproto==1.2.0 ; python_version >= "3.10" and python_version < "4.0"
 yarl==1.9.2 ; python_version >= "3.10" and python_version < "4.0"
-
 httpx~=0.25.0
 SQLAlchemy~=2.0.22
 aiohttp~=3.8.6
