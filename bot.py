@@ -22,5 +22,5 @@ nonebot.load_plugins("hexi")  # 加载bot自定义插件
 nonebot.load_from_toml("pyproject.toml")
 
 if __name__ == "__main__":
-    logger.warning("xx？启动！")
+    logger.warning("hexi？启动！")
     nonebot.run(app="__mp_main__:app")
