@@ -51,6 +51,7 @@ adapters = [
     { name = "OneBot V12", module_name = "nonebot.adapters.onebot.v12" },
     {name =  "minecraft", module_name = "nonebot.adapter.minecraft"},
 ]
+
 plugin_dirs = ["hexi/plugins"]
 plugins = [
     "onebot_qqguild_extension",
