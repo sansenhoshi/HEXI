@@ -6,8 +6,9 @@ from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 from .picture_tools import draw_rect, circle_corner, png_resize, \
     get_top_object_img, \
-    image_paste, paste_ic_logo, get_avatar, get_special_icon, draw_point_line\
+    image_paste, paste_ic_logo, get_avatar, get_special_icon, draw_point_line
 
+from .bf_object_dict import bf_object
 from .PlayDataClass import PlayerStats
 
 filepath = os.path.dirname(__file__).replace("\\", "/")
@@ -47,14 +48,14 @@ async def builder(data, platform, property):
     data_image = Image.new('RGBA', (1920, 1080), (0, 0, 0, 1000))
     draw = ImageDraw.Draw(data_image)
     # 2. 载入字体
-    ch_text_font4 = ImageFont.truetype(filepath + '/font/NotoSansSCMedium-4.ttf', 32)
-    ch_text_font3 = ImageFont.truetype(filepath + '/font/NotoSansSCMedium-4.ttf', 48)
+    ch_text_font4 = ImageFont.truetype(filepath + '/font/SourceHanSansHW-VF.ttf', 32)
+    ch_text_font3 = ImageFont.truetype(filepath + '/font/SourceHanSansHW-VF.ttf', 48)
     en_text_font4 = ImageFont.truetype(filepath + '/font/BF_Modernista-Bold.ttf', 32)
-    ch_text_font_m = ImageFont.truetype(filepath + '/font/NotoSansSCMedium-4.ttf', 42)
-    ch_text_font_5 = ImageFont.truetype(filepath + '/font/NotoSansSCMedium-4.ttf', 24)
-    ch_text_font_6 = ImageFont.truetype(filepath + '/font/NotoSansSCMedium-4.ttf', 22)
-    ch_text_font_title = ImageFont.truetype(filepath + '/font/NotoSansSCMedium-4.ttf', 80)
-    ch_text_font_h2 = ImageFont.truetype(filepath + '/font/NotoSansSCMedium-4.ttf', 60)
+    ch_text_font_m = ImageFont.truetype(filepath + '/font/SourceHanSansHW-VF.ttf', 42)
+    ch_text_font_5 = ImageFont.truetype(filepath + '/font/SourceHanSansHW-VF.ttf', 24)
+    ch_text_font_6 = ImageFont.truetype(filepath + '/font/SourceHanSansHW-VF.ttf', 22)
+    ch_text_font_title = ImageFont.truetype(filepath + '/font/SourceHanSansHW-VF.ttf', 80)
+    ch_text_font_h2 = ImageFont.truetype(filepath + '/font/SourceHanSansHW-VF.ttf', 60)
     en_text_font_small = ImageFont.truetype(filepath + '/font/BF_Modernista-Bold.ttf', 20)
     # 测试背景
     bg_name = os.listdir(filepath + "/img/bg/common/")
@@ -106,11 +107,11 @@ async def builder(data, platform, property):
         # 绘制竖线
         draw.line([290, height - 5, 290, height + 130], fill="white", width=3, joint=None)
         # 获取文字的宽度
-        weapon_name = weapon_list[i]["weaponName"]
-        width = draw.textlength(weapon_name, en_text_font4)  # 获取长度
+        weapon_name = bf_object[weapon_list[i]["weaponName"]]
+        width = draw.textlength(weapon_name, ch_text_font4)  # 获取长度
 
         # 绘制武器名称
-        draw.text((200 - width, height + 90), f'{weapon_name}', fill="white", direction="rtl", font=en_text_font4)
+        draw.text((200 - width, height + 90), f'{weapon_name}', fill="white", direction="rtl", font=ch_text_font4)
 
         # 绘制武器数据
         draw.text((300, height), f'击杀数：{weapon_list[i]["kills"]}', fill="white", font=ch_text_font_5)
@@ -153,11 +154,11 @@ async def builder(data, platform, property):
         # 绘制竖线
         draw.line([835, height - 5, 835, height + 130], fill="white", width=3, joint=None)
         # 获取文字的宽度
-        vehicle_name = vehicle_list[i]["vehicleName"]
-        width = draw.textlength(vehicle_name, en_text_font4)  # 获取长度
+        vehicle_name = bf_object[vehicle_list[i]["vehicleName"]]
+        width = draw.textlength(vehicle_name, ch_text_font4)  # 获取长度
 
         # 绘制载具名称
-        draw.text((765 - width, height + 90), f'{vehicle_name}', fill="white", direction="rtl", font=en_text_font4)
+        draw.text((765 - width, height + 90), f'{vehicle_name}', fill="white", direction="rtl", font=ch_text_font4)
 
         # 绘制载具数据
         draw.text((855, height), f'击杀人数：{vehicle_list[i]["kills"]}', fill="white", font=ch_text_font4)
@@ -213,7 +214,7 @@ async def builder(data, platform, property):
     data_image = draw_rect(data_image, (1120, 831, 1645, 1055), 1, fill=(50, 50, 50, 150))
     data_image = draw_rect(data_image, (1123, 834, 1642, 1052), 5, fill=(0, 0, 0, 150))
     # 文字部分
-    best_text = "最 佳 专 家"
+    best_text = "最佳专家"
     best_text_width = draw.textlength(best_text, ch_text_font_h2)
     # 分割线
     draw.line([1455, 845, 1430, 1030], fill="white", width=3, joint=None)
@@ -292,7 +293,7 @@ async def builder(data, platform, property):
     draw.text((1680, 707), f'胜率：{win}', fill="white", font=ch_text_font_6)
     # part1
     # 分割线
-    data_image = await draw_point_line(data_image, (1685, 764), (1870, 764), line_spacing=5, line_length=30,line_width=2,
+    data_image = await draw_point_line(data_image, (1685, 764), (1870, 764), line_spacing=5, line_length=30, line_width=2,
                                        line_color='white')
     draw.text((1680, 793), f'AI击杀：{AI_kills}', fill="white", font=ch_text_font_6)
     draw.text((1680, 850), f'场均击杀：{kills_per_match}', fill="white", font=ch_text_font_6)
@@ -302,7 +303,7 @@ async def builder(data, platform, property):
 
     # 粘贴game logo
     logo = Image.open(filepath + "/img/bf2042_logo/bf2042logo.png").convert('RGBA')
-    logo = png_resize(logo, new_width=120, new_height=120)
+    logo = png_resize(logo, new_width=95, new_height=95)
     data_image = image_paste(logo, data_image, (1775, 25))
 
     data_image.show()
