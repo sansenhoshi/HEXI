@@ -1,6 +1,6 @@
 import hashlib
 import json
-import logging as sv
+from nonebot.log import logger as sv
 import os
 import random
 import time
