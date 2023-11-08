@@ -22,6 +22,7 @@ status = on_command("2042战绩", aliases=status_aliases)
 @status.handle()
 async def handle_status(event: MessageEvent, state: T_State):
     m_state = MessageState(state)
+    print(state)
     cmd = m_state.get_command()
     msg = m_state.get_command_arg()
     cmd = cmd[0]

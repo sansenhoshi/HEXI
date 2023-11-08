@@ -15,8 +15,9 @@ test = on_command("测试", aliases={"测试"})
 
 
 @test.handle()
-async def handle_test(event: MessageEvent,state:T_State):
+async def handle_test(event: MessageEvent, state: T_State):
     m_state = MessageState(state)
+    print(state)
     cmd = m_state.get_command()
     msg = m_state.get_command_arg()
     uid = event.user_id
