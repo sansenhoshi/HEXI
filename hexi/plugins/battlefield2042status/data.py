@@ -5952,7 +5952,7 @@ async def query_data(player, platform, query_type):
         try:
             async with session.get(url, headers=headers, timeout=15) as response:
                 rest = await response.text()
-                rest = str_filter(rest)
+                # rest = str_filter(rest)
                 if response.status == 200:
                     result = json.loads(rest)
                     img = await builder(result, platform, query_type)
